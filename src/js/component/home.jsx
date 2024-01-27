@@ -1,26 +1,61 @@
 import React from "react";
 
-//include images into your bundle
-import rigoImage from "../../img/rigo-baby.jpg";
+import SecondsCounter from "./counter";
 
-//create your first component
-const Home = () => {
-	return (
-		<div className="text-center">
-			<h1 className="text-center mt-5">Hello Rigo!</h1>
-			<p>
-				<img src={rigoImage} />
-			</p>
-			<a href="#" className="btn btn-success">
-				If you see this green button... bootstrap is working...
-			</a>
-			<p>
-				Made by{" "}
-				<a href="http://www.4geeksacademy.com">4Geeks Academy</a>, with
-				love!
-			</p>
-		</div>
-	);
-};
+class Home extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      counter: 0,
+    };
+  }
+
+  componentDidMount() {
+    this.intervalId = setInterval(() => {
+      let six = Math.floor((this.state.counter / 100000) % 10);
+      let five = Math.floor((this.state.counter / 10000) % 10);
+      let four = Math.floor((this.state.counter / 1000) % 10);
+      let three = Math.floor((this.state.counter / 100) % 10);
+      let two = Math.floor((this.state.counter / 10) % 10);
+      let one = this.state.counter % 10;
+
+      console.log(
+        "Este es el contador de cada digito!!!! ----->",
+        six,
+        five,
+        four,
+        three,
+        two,
+        one
+      );
+
+      this.setState({ counter: this.state.counter + 1 });
+    }, 1000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.intervalId);
+  }
+
+  render() {
+    let six = Math.floor((this.state.counter / 100000) % 10);
+    let five = Math.floor((this.state.counter / 10000) % 10);
+    let four = Math.floor((this.state.counter / 1000) % 10);
+    let three = Math.floor((this.state.counter / 100) % 10);
+    let two = Math.floor((this.state.counter / 10) % 10);
+    let one = this.state.counter % 10;
+
+    return (
+      <SecondsCounter
+        digitOne={one}
+        digitTwo={two}
+        digitThree={three}
+        digitFour={four}
+        digitFive={five}
+        digitSix={six}
+      />
+    );
+  }
+}
 
 export default Home;
